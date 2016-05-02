@@ -95,7 +95,11 @@
     <Compile Include="Bind\WindowsEvents.cs" />
     <Compile Include="FS\DirectoryEnum.cs" />
     <Compile Include="FS\FileSystem.cs" />
+    <Compile Include="FS\FolderTree.cs" />
     <Compile Include="FS\ProjItem.cs" />
+    <Compile Include="FS\ShPidlSystem.cs" />
+    <Compile Include="FS\Tree.cs" />
+    <Compile Include="FS\TreeContext.cs" />
     <Compile Include="FS\Win32\FileSystem.cs" />
     <Compile Include="FS\Win32\Iterator.cs" />
     <Compile Include="FS\Win32\PathHelpers.cs" />
@@ -107,7 +111,7 @@
     <Compile Include="Visual\FolderWindow.xaml.cs">
       <DependentUpon>FolderWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Visual\ProjTree.cs" />
+    <Compile Include="FS\ProjTree.cs" />
     <Compile Include="Visual\TextDrop.cs" />
     <Compile Include="Visual\TextRead.cs" />
     <Compile Include="Visual\FolderTabs.cs" />

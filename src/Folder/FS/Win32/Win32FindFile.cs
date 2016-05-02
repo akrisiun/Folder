@@ -43,10 +43,10 @@ namespace IOFile
 
         public partial class FileAttributes
         {
-            internal const int FILE_ATTRIBUTE_NORMAL = 0x00000080;
-            internal const int FILE_ATTRIBUTE_READONLY = 0x00000001;
-            internal const int FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
-            internal const int FILE_ATTRIBUTE_REPARSE_POINT = 0x00000400;
+            public const int FILE_ATTRIBUTE_NORMAL = 0x00000080;
+            public const int FILE_ATTRIBUTE_READONLY = 0x00000001;
+            public const int FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
+            public const int FILE_ATTRIBUTE_REPARSE_POINT = 0x00000400;
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -65,6 +65,8 @@ namespace IOFile
             internal string cFileName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
             internal string cAlternateFileName;
+
+            public bool HasAttribute(FATTR attr) { return (dwFileAttributes & (uint)attr) != 0; }
         }
 
         internal static uint SetErrorMode(uint uMode)
@@ -193,4 +195,15 @@ namespace IOFile
 
         #endregion
     }
+
+    [Flags]
+    public enum FATTR : uint
+    {   
+        NONE = 0,
+        FILE_ATTRIBUTE_DIRECTORY = Win32FindFile.FileAttributes.FILE_ATTRIBUTE_DIRECTORY,
+        FILE_ATTRIBUTE_NORMAL = Win32FindFile.FileAttributes.FILE_ATTRIBUTE_NORMAL,
+        FILE_ATTRIBUTE_READONLY = Win32FindFile.FileAttributes.FILE_ATTRIBUTE_READONLY,
+        FILE_ATTRIBUTE_REPARSE_POINT = Win32FindFile.FileAttributes.FILE_ATTRIBUTE_REPARSE_POINT
+    }
+
 }

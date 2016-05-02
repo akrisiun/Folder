@@ -9,15 +9,14 @@ using System.Windows;
 using System.Windows.Shell;
 using System.Windows.Threading;
 using System.ComponentModel;
-using VfpProj;
 using Folder;
 using VisualFoxpro;
 using Application = System.Windows.Application;
 using System.Runtime.InteropServices;
 
-namespace Vfp
+namespace VfpProj
 {
-    public class Startup : IComponent, IDisposable // _Startup
+    public class Startup : IComponent, IDisposable
     {
         static Startup()
         {

@@ -1,6 +1,4 @@
-﻿using Folder;
-using MultiSelect;
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -10,7 +8,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Forms = System.Windows.Forms;
 
-namespace VfpProj
+using Folder.FS;
+using MultiSelect;
+
+namespace Folder
 {
     public static class TextDrop
     {
@@ -25,7 +26,7 @@ namespace VfpProj
             var txt = sender as Forms.TextBox;
             if (e.KeyCode == Forms.Keys.Enter && txt != null)
             {
-                Tree.LoadFolder(txt.Tag as FolderWindow, txt.Text);
+                Tree.LoadTree(txt.Tag as FolderWindow, txt.Text);
             }
         }
 

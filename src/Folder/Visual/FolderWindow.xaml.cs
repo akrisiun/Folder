@@ -4,14 +4,14 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Media.Imaging;
 using Forms = System.Windows.Forms;
 using System.IO;
 using System.Text;
 using Folder.Native;
-using System.Windows.Media.Imaging;
-using VfpProj;
-using Vfp;
 using MultiSelect;
+using VfpProj;
+using Folder.FS;
 
 namespace Folder
 {
@@ -29,7 +29,6 @@ namespace Folder
                 Startup.Dll = "Folder";
 
             FileName = string.Empty;
-            // InitializeComponent();
             if (!_contentLoaded)
             {
                 _contentLoaded = true;
@@ -46,7 +45,7 @@ namespace Folder
             Tree.Bind(this);
 
             TextDrop.Bind(this, this.txtPath);
-            Tree.LoadFolder(this, txtPath.Text);
+            Tree.LoadTree(this, txtPath.Text);
         }
 
         void buttonOpen_Click(object sender, RoutedEventArgs e)
@@ -54,7 +53,7 @@ namespace Folder
             var w = this;
             string dir = txtPath.Text.Trim();
 
-            Tree.LoadFolder(this, dir);
+            Tree.LoadTree(this, dir);
         }
 
     }
