@@ -2,12 +2,12 @@
 using SharpShell.Interop;
 using SharpShell.Pidl;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Folder.FS
 {
+
     class TreeContext
     {
         public static void RighClick(string path, IntPtr Handle,

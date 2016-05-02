@@ -1,5 +1,6 @@
 ﻿using IOFile;
 using MultiSelect;
+using SharpShell.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace Folder.FS
     {
         public static void LoadDir(Window w, MultiSelectTreeView tree, string dir)
         {
+            //SHSimpleIDListFromPath
+            PidlData dataPidl = NativePidl.PIDListFromPath(dir);
+
             IEnumerable<IOFile.DirectoryEnum.FileDataInfo> listDir = null;
             IEnumerable<IOFile.DirectoryEnum.FileDataInfo> list = null;
             bool any = false;
@@ -64,7 +68,6 @@ namespace Folder.FS
             } while (num.MoveNext());
 
         }
-
 
         public static bool IsIgnore(string fileName)
         {
