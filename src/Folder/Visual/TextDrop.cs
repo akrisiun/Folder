@@ -109,13 +109,18 @@ namespace Folder
                 if (Mouse.Captured != treeView)
                     Mouse.Capture(treeView, CaptureMode.Element);
 
-                //string[] paths = new string[] { Path.GetFullPath(treeView.SelectedValue as string) };
                 string[] paths = new string[SelectedItems.Count];
-                for(int i = 0; i < SelectedItems.Count; i++)
+                for (int i = 0;
+                    i < SelectedItems.Count && SelectedItems[i] as string != null; i++)
+                {
                     paths[i] = Path.GetFullPath(SelectedItems[i] as string);
+                }
 
-                DragDrop.DoDragDrop(treeView, new DataObject(DataFormats.FileDrop, paths),
-                    DragDropEffects.Link);
+                if (paths[0] != null)
+                {
+                    DragDrop.DoDragDrop(treeView, new DataObject(DataFormats.FileDrop, paths),
+                        DragDropEffects.Link);
+                }
             }
         }
 

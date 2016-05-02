@@ -115,6 +115,7 @@
     <Compile Include="Visual\TextDrop.cs" />
     <Compile Include="Visual\TextRead.cs" />
     <Compile Include="Visual\FolderTabs.cs" />
+    <Compile Include="Visual\TreeNode.cs" />
     <Page Include="Visual\FolderWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -64,6 +64,11 @@
                 <tree:MultiSelectTreeViewItem>
                     Loading ..
                 </tree:MultiSelectTreeViewItem>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="tree:MultiSelectTreeViewItem">
+                        <EventSetter Event="tree:MultiSelectTreeViewItem.Expanded" Handler="tree_OnExpanded" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
             </tree:MultiSelectTreeView>
         </DockPanel>
     </Grid>

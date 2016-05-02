@@ -1,6 +1,7 @@
 ﻿using IOFile;
 using MultiSelect;
 using SharpShell.Helpers;
+using SharpShell.Pidl;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,31 +17,17 @@ namespace Folder.FS
             //SHSimpleIDListFromPath
             PidlData dataPidl = NativePidl.PIDListFromPath(dir);
 
-            IEnumerable<IOFile.DirectoryEnum.FileDataInfo> listDir = null;
-            IEnumerable<IOFile.DirectoryEnum.FileDataInfo> list = null;
-            bool any = false;
-            IEnumerator num = null;
-            IEnumerator numDir = null;
-            try
-            {
-                list = DirectoryEnum.ReadFilesInfo(dir, searchOption: SearchOption.TopDirectoryOnly);
-                num = list.GetEnumerator();
-                any = num.MoveNext();
-
-                listDir = DirectoryEnum.ReadDirectories(dir);
-                numDir = listDir.GetEnumerator();
-                numDir.MoveNext();
-                any = any || numDir.Current != null;
-            }
-            catch { }
-            if (!any)
+            ListData<DirectoryEnum.FileDataInfo> data = ReadDir(dir);
+            if (!data.any)
                 return;
 
             tree.Items.Clear();
             var itemRoot = new MultiSelectTreeViewItem { Header = dir };
+            itemRoot.DataContext = dir;
             tree.Items.Add(itemRoot);
             itemRoot.IsExpanded = true;
 
+            var numDir = data.numDir;
             while (numDir.Current != null)
             {
                 var item = numDir.Current as DirectoryEnum.FileDataInfo;
@@ -49,12 +36,16 @@ namespace Folder.FS
                     + (item.HasAttribute(FATTR.FILE_ATTRIBUTE_DIRECTORY) ? @"\" : String.Empty);
 
                 var subItem = new MultiSelectTreeViewItem { Header = displayName };
+                subItem.DataContext = item.cFileName;
                 itemRoot.Items.Add(subItem);
+
+                subItem.Items.Add(String.Empty);
 
                 if (!numDir.MoveNext())
                     break;
             }
 
+            var num = data.num;
             do
             {
                 var item = num.Current as DirectoryEnum.FileDataInfo;
@@ -62,11 +53,44 @@ namespace Folder.FS
                     continue;
 
                 string displayName = Path.GetFileName(item.cFileName);
+                
                 var subItem = new MultiSelectTreeViewItem { Header = displayName };
+                subItem.DataContext = item.cFileName;
                 itemRoot.Items.Add(subItem);
 
             } while (num.MoveNext());
 
+        }
+
+        struct ListData<T>
+        {
+            public IEnumerable<T> ListDir;
+            public IEnumerable<T> List;
+
+            public IEnumerator num;
+            public IEnumerator numDir;
+            public bool any;
+        }
+
+        static ListData<DirectoryEnum.FileDataInfo> ReadDir(string dir)
+        {
+            var data = new ListData<DirectoryEnum.FileDataInfo>();
+            bool any = false;
+            try
+            {
+                data.List = DirectoryEnum.ReadFilesInfo(dir, searchOption: SearchOption.TopDirectoryOnly);
+                data.num = data.List.GetEnumerator();
+                any = data.num.MoveNext();
+
+                data.ListDir = DirectoryEnum.ReadDirectories(dir);
+                data.numDir = data.ListDir.GetEnumerator();
+                data.numDir.MoveNext();
+                any = any || data.numDir.Current != null;
+            }
+            catch { }
+
+            data.any = any;
+            return data;
         }
 
         public static bool IsIgnore(string fileName)

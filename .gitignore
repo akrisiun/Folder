@@ -1,1 +1,6 @@
 lib/
+*.suo
+[aA]pp.config
+[wW]eb.config
+obj/
+bin/

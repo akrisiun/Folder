@@ -12,6 +12,7 @@ using Folder.Native;
 using MultiSelect;
 using VfpProj;
 using Folder.FS;
+using Folder.Visual;
 
 namespace Folder
 {
@@ -56,6 +57,22 @@ namespace Folder
             Tree.LoadTree(this, dir);
         }
 
+        //<ItemsControl.ItemContainerStyle>
+        //            <Style TargetType="tree:MultiSelectTreeViewItem">
+        //                <EventSetter Event="TreeViewItem.Expanded" Handler="tree_OnExpanded" />
+        //            </Style>
+        //</ItemsControl.ItemContainerStyle>
+
+        void tree_OnExpanded(object sender, RoutedEventArgs e)
+        {
+            var tvi = e.Source as MultiSelectTreeViewItem;
+            if (tvi != null)
+            {
+                TreeNode.OnExpand(tvi);
+
+                e.Handled = true;
+            }
+        }
     }
 
 }
