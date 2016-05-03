@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Folder.Native;
 using Folder.FS;
 using System.IO;
+using Folder.Visual;
 
 namespace Folder.FS
 {
@@ -17,6 +18,7 @@ namespace Folder.FS
             var treeView = w.tree;
             treeView.MouseMove += TreeViewDrag.treeView_MouseMove;
             treeView.MouseLeftButtonUp += TreeViewDrag.treeView_MouseDown;
+            treeView.Selection.MouseButtonDown += TreeViewDrag.treeView_MouseRightClick;
             treeView.DragOver += TreeViewDrag.treeView_DragOver;
             treeView.Drop += TreeViewDrag.treeView_Drop;
 

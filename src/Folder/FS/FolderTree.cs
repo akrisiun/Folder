@@ -15,7 +15,7 @@ namespace Folder.FS
         public static void LoadDir(Window w, MultiSelectTreeView tree, string dir)
         {
             //SHSimpleIDListFromPath
-            PidlData dataPidl = NativePidl.PIDListFromPath(dir);
+            PidlData dataPidl = ShPidlSystem.FromPath(dir);
 
             ListData<DirectoryEnum.FileDataInfo> data = ReadDir(dir);
             if (!data.any)
@@ -36,10 +36,11 @@ namespace Folder.FS
                     + (item.HasAttribute(FATTR.FILE_ATTRIBUTE_DIRECTORY) ? @"\" : String.Empty);
 
                 var subItem = new MultiSelectTreeViewItem { Header = displayName };
-                subItem.DataContext = item.cFileName;
+                subItem.DataContext = Path.Combine(dir, item.cFileName);
                 itemRoot.Items.Add(subItem);
 
                 subItem.Items.Add(String.Empty);
+                subItem.IsExpanded = false;
 
                 if (!numDir.MoveNext())
                     break;
@@ -55,7 +56,7 @@ namespace Folder.FS
                 string displayName = Path.GetFileName(item.cFileName);
                 
                 var subItem = new MultiSelectTreeViewItem { Header = displayName };
-                subItem.DataContext = item.cFileName;
+                subItem.DataContext = Path.Combine(dir, item.cFileName);
                 itemRoot.Items.Add(subItem);
 
             } while (num.MoveNext());
