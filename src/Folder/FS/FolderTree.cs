@@ -22,15 +22,39 @@ namespace Folder.FS
                 return;
 
             tree.Items.Clear();
+
             var itemRoot = new MultiSelectTreeViewItem { Header = dir };
             itemRoot.DataContext = dir;
             tree.Items.Add(itemRoot);
             itemRoot.IsExpanded = true;
 
+            LoadSubDirData(w, itemRoot, data);
+        }
+
+        public static void LoadSubDir(Window w,
+            MultiSelectTreeViewItem itemRoot, string dir)
+        {
+            itemRoot.Items.Clear();
+
+            ListData<DirectoryEnum.FileDataInfo> data = ReadDir(dir);
+            if (!data.any)
+                return;
+            LoadSubDirData(w, itemRoot, data);
+        }
+
+        static void LoadSubDirData(Window w,
+            MultiSelectTreeViewItem itemRoot,
+            ListData<DirectoryEnum.FileDataInfo> data)
+        {
+            string dir = data.Dir;
+            //MultiSelectTreeView tree = itemRoot.ParentTreeView;
+
             var numDir = data.numDir;
-            while (numDir.Current != null)
+            do 
             {
                 var item = numDir.Current as DirectoryEnum.FileDataInfo;
+                if (item == null)
+                    break;
 
                 string displayName = Path.GetFileName(item.cFileName)
                     + (item.HasAttribute(FATTR.FILE_ATTRIBUTE_DIRECTORY) ? @"\" : String.Empty);
@@ -42,46 +66,38 @@ namespace Folder.FS
                 subItem.Items.Add(String.Empty);
                 subItem.IsExpanded = false;
 
-                if (!numDir.MoveNext())
-                    break;
             }
+            while (numDir.MoveNext());
 
-            var num = data.num;
+            var num = data.numFiles;
             do
             {
                 var item = num.Current as DirectoryEnum.FileDataInfo;
-                if (IsIgnore(item.cFileName))
+                if (item == null || IsIgnore(item.cFileName))
                     continue;
 
                 string displayName = Path.GetFileName(item.cFileName);
-                
+
                 var subItem = new MultiSelectTreeViewItem { Header = displayName };
                 subItem.DataContext = Path.Combine(dir, item.cFileName);
                 itemRoot.Items.Add(subItem);
-
             } while (num.MoveNext());
 
-        }
-
-        struct ListData<T>
-        {
-            public IEnumerable<T> ListDir;
-            public IEnumerable<T> List;
-
-            public IEnumerator num;
-            public IEnumerator numDir;
-            public bool any;
         }
 
         static ListData<DirectoryEnum.FileDataInfo> ReadDir(string dir)
         {
             var data = new ListData<DirectoryEnum.FileDataInfo>();
+            data.Dir = dir;
+            if (!Directory.Exists(dir))
+                throw new DirectoryNotFoundException(dir ?? "-");
+
             bool any = false;
             try
             {
-                data.List = DirectoryEnum.ReadFilesInfo(dir, searchOption: SearchOption.TopDirectoryOnly);
-                data.num = data.List.GetEnumerator();
-                any = data.num.MoveNext();
+                data.ListFiles = DirectoryEnum.ReadFilesInfo(dir, searchOption: SearchOption.TopDirectoryOnly);
+                data.numFiles = data.ListFiles.GetEnumerator();
+                any = data.numFiles.MoveNext();
 
                 data.ListDir = DirectoryEnum.ReadDirectories(dir);
                 data.numDir = data.ListDir.GetEnumerator();
@@ -116,6 +132,19 @@ namespace Folder.FS
 
             return false;
         }
+    }
+
+    public struct ListData<T>
+    {
+        public string Dir { get; set; }
+        public IEnumerable<T> ListDir;
+        public IEnumerable<T> ListFiles;
+
+        // Numerators
+        public IEnumerator numDir;
+        public IEnumerator numFiles;
+        
+        public bool any; // any subdirectories or files are found
     }
 
 }

@@ -2,6 +2,8 @@
 using SharpShell.Helpers;
 using SharpShell.Interop;
 using SharpShell.Pidl;
+using SharpShell.SharpContextMenu;
+using Shell.SharpContextMenu;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -19,7 +21,7 @@ namespace Folder.FS
             var pidl = dataPidl.Handle.pidl;
             var ctrl = new ControlWindow();
             var hWnd = ctrl.Handle;
-            var itemHit = new ShellItem(dataPidl);
+            var itemHit = new ShellItem(dataPidl.Handle.pidl, dataPidl.Path);
 
             Point pt = Mouse.GetPosition(tree);
             RighClick(path, ctrl, itemHit, (int)pt.X, (int)pt.Y);
@@ -28,9 +30,13 @@ namespace Folder.FS
         public static void RighClick(string path, System.Windows.Forms.Control ctrl, // IntPtr Handle
             ShellItem itemHit, int x, int y)
         {
-            var shellFolder = itemHit.IsFolder ? itemHit.ShellFolderInterface : itemHit.ParentItem.ShellFolderInterface;
+            IShellFolder shellFolder = itemHit.IsFolder ? itemHit.ShellFolderInterface
+                : itemHit.ParentItem.ShellFolderInterface;
 
             //  The item pidl is either the folder if the item is a folder, or the combined pidl otherwise.
+            IntPtr ppv = IntPtr.Zero;
+            // itemHit.RelativePIDL = ILShell32.ILFindLastID(itemHit.PIDL); 
+
             var fullIdList = itemHit.IsFolder
                 ? PidlManager.PidlToIdlist(itemHit.PIDL)
                 : PidlManager.Combine(PidlManager.PidlToIdlist(itemHit.ParentItem.PIDL),
@@ -38,41 +44,50 @@ namespace Folder.FS
 
 
             //  Get the UI object of the context menu.
-            IntPtr apidl = PidlManager.PidlsToAPidl(new IntPtr[] { PidlManager.IdListToPidl(fullIdList) });
+            IntPtr itemPidl = PidlManager.IdListToPidl(fullIdList);
+            //IntPtr[] apidl = new IntPtr[]
+              //  PidlManager.PidlsToAPidl(new IntPtr[] { itemPidl })
+            /*v};
 
-            IntPtr ppv = IntPtr.Zero;
-            shellFolder.GetUIObjectOf(ctrl.Handle, 1,
+            shellFolder.GetUIObjectOf(ctrl.Handle, (uint)1,
                 // (IntPtr[])(object)
                 apidl,
-                Shell32.IID_IContextMenu, 0,
+                ref Shell32.IID_IContextMenu, 0,
                 out ppv);
+            */
 
             //  If we have an item, cast it.
             if (ppv == IntPtr.Zero)
             {
-                var menu = new SharpShell.SharpContextMenu.ShellContextMenu(itemHit);
+                var menu = new ShellContextMenu(itemHit);
 
                 var pos = new System.Drawing.Point(x, y); //node.Bounds.Left, node.Bounds.Top);
-                menu.ShowContextMenu(ctrl, pos);
+
+                (ctrl as ControlWindow).ParentMenu = menu;
+                
+                if (menu.InitFolder(shellFolder, itemHit.PIDL))
+                    menu.ShowContextMenu(ctrl, pos);
             }
         }
 
         class ControlWindow : System.Windows.Forms.Control
         {
-            public ControlWindow() // ShellContextMenu parent)
+            public ControlWindow(ShellContextMenu parent = null)
             {
-                //m_Parent = parent;
+               ParentMenu = parent;
             }
 
             protected override void WndProc(ref System.Windows.Forms.Message m)
             {
-                //if (!m_Parent.HandleMenuMessage(ref m))
-                {
+                if (ParentMenu != null
+                    && ParentMenu.HandleMenuMessage(ref m))
+                    return;
+                
                     base.WndProc(ref m);
-                }
+                
             }
 
-            //ShellContextMenu m_Parent;
+            public ShellContextMenu ParentMenu;
         }
     }
 }

@@ -4,4 +4,6 @@ lib/
 [wW]eb.config
 obj/
 bin/
+websrc/
+web*.cmd
 *.user

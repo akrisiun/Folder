@@ -56,6 +56,7 @@ namespace Folder.Visual
             if (_isDragging && e.LeftButton == MouseButtonState.Released)
             {
                 _isDragging = false;
+
                 // ReleaseMouseCapture 
                 if (Mouse.Captured != null)
                     Mouse.Capture(null, CaptureMode.None);

@@ -97,6 +97,7 @@
     <Compile Include="FS\DirectoryEnum.cs" />
     <Compile Include="FS\FileSystem.cs" />
     <Compile Include="FS\FolderTree.cs" />
+    <Compile Include="FS\IFirstRecord.cs" />
     <Compile Include="FS\ProjItem.cs" />
     <Compile Include="FS\ShPidlSystem.cs" />
     <Compile Include="FS\Tree.cs" />

@@ -43,6 +43,20 @@ namespace Folder
 
         void PostLoad()
         {
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                string dir = args[1];
+                try
+                {
+                    Directory.SetCurrentDirectory(dir);
+                }
+                catch
+                {
+                    // breakpoint
+                }
+            }
+
             Tree.Bind(this);
 
             TextDrop.Bind(this, this.txtPath);
@@ -68,7 +82,7 @@ namespace Folder
             var tvi = e.Source as MultiSelectTreeViewItem;
             if (tvi != null)
             {
-                TreeNode.OnExpand(tvi);
+                TreeNode.OnExpand(this, tvi);
 
                 e.Handled = true;
             }
