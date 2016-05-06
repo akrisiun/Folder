@@ -38,9 +38,9 @@ namespace Folder.Visual
 
                 string[] paths = new string[SelectedItems.Count];
                 for (int i = 0;
-                    i < SelectedItems.Count && SelectedItems[i] as string != null; i++)
+                    i < SelectedItems.Count && SelectedItems[i] as IconItem != null; i++)
                 {
-                    paths[i] = Path.GetFullPath(SelectedItems[i] as string);
+                    paths[i] = Path.GetFullPath((SelectedItems[i] as IconItem).Path);
                 }
 
                 if (paths[0] != null)
@@ -101,20 +101,6 @@ namespace Folder.Visual
             var treeView = sender as MultiSelectTreeView;
             if (treeView == null)
                 return;
-            if (e.Data.GetDataPresent(typeof(Task)))
-            {
-                Task sourceTask = (Task)e.Data.GetData(typeof(Task));
-                //Task<TreeViewItem> targetTask = GetItemAtLocation<Task<TreeViewItem>>(treeView, MouseUtilities.GetMousePosition());
-
-                //// Code to move the item in the model is placed here...
-                //targetTask.Wait();
-                //if (targetTask.IsCompleted)
-                //{
-                //    e.Handled = true;
-                //}
-
-                return;
-            }
 
             var obj = e.Data as System.Windows.DataObject;
             var formats = e.Data.GetFormats();
