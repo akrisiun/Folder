@@ -1,7 +1,8 @@
 ﻿using Folder.FS;
 using MultiSelect;
 using System;
-using System.Windows; 
+using System.IO;
+using System.Windows;
 
 namespace Folder.Visual
 {
@@ -11,10 +12,10 @@ namespace Folder.Visual
         {
             item.IsExpanded = true;
             var items = item.Items;
-            string fullPath = item.DataContext as string;
+            var node = item.DataContext as IconItem;
 
-            if (fullPath != null)
-                FolderTree.LoadSubDir(w, item, fullPath);
+            if (node != null && Directory.Exists(node.Path))
+                FolderTree.LoadSubDir(w, item, node.Path);
         } 
         
     }

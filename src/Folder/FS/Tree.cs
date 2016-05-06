@@ -23,6 +23,8 @@ namespace Folder.FS
             treeView.Drop += TreeViewDrag.treeView_Drop;
 
             w.buttonProj.Click += (s, e) => GoUp(w, w.buttonProj);
+
+            FolderTree.BindTree(w, w.tree);
         }
 
         public static void GoUp(this Folder.FolderWindow w, Button btn)

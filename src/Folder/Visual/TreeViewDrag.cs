@@ -72,9 +72,11 @@ namespace Folder.Visual
             if (treeView == null || e.RightButton != MouseButtonState.Pressed)
                 return;
 
-            var fullPath = treeItem.DataContext as string;
-            //var item = treeView.LastSelectedItem;
-
+            var item = treeItem.DataContext as IconItem;
+            var fullPath = item.Path;
+            if (fullPath == null)
+                return;
+      
             TreeContext.RighClick(fullPath, treeView);
         }
 

@@ -24,8 +24,9 @@ namespace Folder
 
         public FolderWindow()
         {
-            // Uri iconUri = new Uri("pack://application:,,,/PRG.ICO", UriKind.RelativeOrAbsolute);
-            //Icon = MainWindow.PrgIco; //  BitmapFrame.Create(iconUri);
+            Uri iconUri = new Uri("pack://application:,,,/pjx.ico", UriKind.RelativeOrAbsolute);
+            Icon = BitmapFrame.Create(iconUri);
+
             if (Startup.Dll == null)
                 Startup.Dll = "Folder";
 
@@ -70,12 +71,6 @@ namespace Folder
 
             Tree.LoadTree(this, dir);
         }
-
-        //<ItemsControl.ItemContainerStyle>
-        //            <Style TargetType="tree:MultiSelectTreeViewItem">
-        //                <EventSetter Event="TreeViewItem.Expanded" Handler="tree_OnExpanded" />
-        //            </Style>
-        //</ItemsControl.ItemContainerStyle>
 
         void tree_OnExpanded(object sender, RoutedEventArgs e)
         {

@@ -93,13 +93,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Bind\WindowsEvents.cs" />
     <Compile Include="FS\DirectoryEnum.cs" />
     <Compile Include="FS\FileSystem.cs" />
     <Compile Include="FS\FolderTree.cs" />
     <Compile Include="FS\IFirstRecord.cs" />
     <Compile Include="FS\ProjItem.cs" />
-    <Compile Include="FS\ShPidlSystem.cs" />
     <Compile Include="FS\Tree.cs" />
     <Compile Include="FS\TreeContext.cs" />
     <Compile Include="FS\Win32\FileSystem.cs" />
@@ -110,15 +108,14 @@
     <Compile Include="FS\Win32\Win32FindFile.cs" />
     <Compile Include="FS\Win32\Win32Marshal.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Visual\CursorHelper.cs" />
     <Compile Include="Visual\FolderWindow.xaml.cs">
       <DependentUpon>FolderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FS\ProjTree.cs" />
+    <Compile Include="Visual\IconItem.cs" />
     <Compile Include="Visual\TreeViewDrag.cs" />
     <Compile Include="Visual\TextDrop.cs" />
     <Compile Include="Visual\TextRead.cs" />
-    <Compile Include="Visual\FolderTabs.cs" />
     <Compile Include="Visual\TreeNode.cs" />
     <Page Include="Visual\FolderWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
