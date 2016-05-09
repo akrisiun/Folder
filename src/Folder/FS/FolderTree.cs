@@ -169,7 +169,7 @@ namespace Folder.FS
             // TODO: git ignore
             if (// ext == ".exe" || 
                 ext == ".dll" || ext == ".metagen"
-                || ext == ".fxp" || ext == ".obj"
+                || ext == ".fxp" || ext == ".obj" || ext == ".bak"
                 || ext == ".cdx" || ext == ".fpt"
                 || ext == ".prt" || ext == ".sct" || ext == ".vct"
                 || ext == ".bsc" || ext == ".lib" || ext == ".exp"

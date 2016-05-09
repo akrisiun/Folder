@@ -20,17 +20,20 @@ namespace Folder.Visual
         public static void treeView_MouseMove(object sender, MouseEventArgs e)
         {
             if (_isDragging && e.LeftButton == MouseButtonState.Released)
-                _isDragging = false;
+            { _isDragging = false; }
 
             MultiSelectTreeView treeView = sender as MultiSelectTreeView;
             if (treeView == null)
+            {
                 return;
-            if (treeView.Selection.IsFirstMouseMove)
-                return;
+            }
 
             if (!_isDragging && e.LeftButton == MouseButtonState.Pressed
                 && treeView.SelectedItems.Count > 0)
             {
+                if (!treeView.AllowDragDropState)
+                    return;
+
                 var SelectedItems = treeView.SelectedItems;
                 _isDragging = true;
                 if (Mouse.Captured != treeView)
@@ -76,7 +79,7 @@ namespace Folder.Visual
             var fullPath = item.Path;
             if (fullPath == null)
                 return;
-      
+
             TreeContext.RighClick(fullPath, treeView);
         }
 

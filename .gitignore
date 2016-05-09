@@ -7,3 +7,4 @@ bin/
 websrc/
 web*.cmd
 *.user
+.vs/
