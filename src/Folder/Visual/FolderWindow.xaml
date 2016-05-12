@@ -3,13 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"  
         xmlns:tree="clr-namespace:MultiSelect;assembly=MultiSelectTreeView"
-        Height="440" Width="350">
+        Height="440" Width="345.248">
 
     <Window.Resources>
         <ResourceDictionary>
-            <!--TODO <Merge
-                //themes/mutilseectTreeview.aero2.xaml
-            -->
         </ResourceDictionary>
 
     </Window.Resources>
@@ -31,28 +28,30 @@
         </WindowsFormsHost>
 
         <WrapPanel Orientation="Horizontal" Margin="0 1 0 0"
-                    Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">
+                   Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2">
 
             <Button x:Name="buttonProj" Content=".." Grid.Column="2"
                 Margin="5 1 1 1" HorizontalAlignment="Right"
                 VerticalAlignment="Top" Height="22" Width="20" />
         </WrapPanel>
 
-        <WrapPanel Orientation="Horizontal" Grid.Row="1" 
-                   HorizontalAlignment="Stretch"
-                   Width="324"
-                   Margin="5 0 2 2">
+        <WrapPanel x:Name="panelFind"
+            Orientation="Horizontal" Grid.Row="1" 
+            HorizontalAlignment="Left"
+            Width="326"
+            Margin="5 0 2 2">
             <Border BorderBrush="Gray" HorizontalAlignment="Stretch"
-                    BorderThickness="1">
-                <Label HorizontalAlignment="Stretch" 
-                       MinWidth="50" Width="298"
-                    >..</Label>
+                    BorderThickness="0">
+                <TextBox x:Name="txtFind"
+                    HorizontalAlignment="Stretch" 
+                    MinWidth="50" Width="280" Height="22"
+                    ></TextBox>
             </Border>
             <Button 
                     Padding="4 0 3 0" Margin="3 0 0 0"
-                    MinWidth="20"
+                    MinWidth="40"
                 >
-                ?
+                Find
             </Button>
         </WrapPanel>
 

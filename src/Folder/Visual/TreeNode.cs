@@ -15,7 +15,10 @@ namespace Folder.Visual
             var node = item.DataContext as IconItem;
 
             if (node != null && Directory.Exists(node.Path))
+            {
+                (w as FolderWindow).txtFind.Text = node.Path;
                 FolderTree.LoadSubDir(w, item, node.Path);
+            }
         } 
         
     }

@@ -6,6 +6,7 @@ using SharpShell.SharpContextMenu;
 using Shell.SharpContextMenu;
 using System;
 using System.Runtime.InteropServices;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -27,8 +28,11 @@ namespace Folder.FS
                 // TODO desktop ContextMenu
                 return;
             }
-            
-             var menu = new ShellContextMenu(itemHit);
+
+            string directory = Path.GetDirectoryName(path);
+            Directory.SetCurrentDirectory(directory);
+
+            var menu = new ShellContextMenu(itemHit);
 
             ShPidlSystem.ShowMenu(menu, shellFolder, itemHit, ctrl, new System.Drawing.Point((int)pt.X, (int)pt.Y));
         }

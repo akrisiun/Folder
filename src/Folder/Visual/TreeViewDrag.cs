@@ -115,6 +115,15 @@ namespace Folder.Visual
                 //  File drop
                 string firstFile = list[0];
                 e.Handled = true;
+
+                // File/Folder drop
+                string directory = Path.GetDirectoryName(firstFile);
+                var w = CsApp.MainWindow;
+
+                Directory.SetCurrentDirectory(directory);
+                w.txtPath.Text = directory;
+                w.txtFind.Text = firstFile;
+                Tree.LoadTree(w, firstFile);
             }
         }
 

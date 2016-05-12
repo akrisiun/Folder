@@ -4,6 +4,7 @@ using Folder.Native;
 using Folder.FS;
 using System.IO;
 using Folder.Visual;
+using MultiSelect;
 
 namespace Folder.FS
 {
@@ -21,10 +22,21 @@ namespace Folder.FS
             treeView.Selection.MouseButtonDown += TreeViewDrag.treeView_MouseRightClick;
             treeView.DragOver += TreeViewDrag.treeView_DragOver;
             treeView.Drop += TreeViewDrag.treeView_Drop;
+            treeView.PreviewSelectionChanged += treeView_PreviewSelectionChanged;
 
             w.buttonProj.Click += (s, e) => GoUp(w, w.buttonProj);
 
             FolderTree.BindTree(w, w.tree);
+        }
+
+        static void treeView_PreviewSelectionChanged(object sender, PreviewSelectionChangedEventArgs e)
+        {
+            var tree = sender as MultiSelectTreeView;
+            var w = CsApp.MainWindow;
+
+            var select = e.Item as IconItem;
+            if (select != null && select.Path != null)
+                w.txtFind.Text = select.Path;
         }
 
         public static void GoUp(this Folder.FolderWindow w, Button btn)
@@ -40,6 +52,8 @@ namespace Folder.FS
         public static void LoadTree(this Folder.FolderWindow w, string dir)
         {
             var ext = FileSystem.SafeGetExtensionLower(dir);
+            var directory = Path.GetDirectoryName(dir);
+
             if (File.Exists(dir) && ext == ".pjx")
             {
                 // project file
@@ -51,8 +65,13 @@ namespace Folder.FS
                 );
                 return;
             }
-            else if (Directory.Exists(dir))
-                FileSystem.CurrentDirectory = dir;
+            else if (Directory.Exists(directory))
+                FileSystem.CurrentDirectory = directory;
+
+            if (File.Exists(dir) && ext == ".sln")
+            { 
+                // TODO
+            }
 
             string projName = FileSystem.CurrentDirectory;
 
