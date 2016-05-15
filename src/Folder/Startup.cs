@@ -9,8 +9,7 @@ using System.Windows;
 using System.Windows.Shell;
 using System.Windows.Threading;
 using System.ComponentModel;
-using Folder;
-using VisualFoxpro;
+using Folder; 
 using Application = System.Windows.Application;
 using System.Runtime.InteropServices;
 
@@ -28,7 +27,7 @@ namespace VfpProj
         public void Dispose()
         {
             appCur = null;
-            App = null;
+            //App = null;
         }
 
         ISite IComponent.Site { get; set; }
@@ -39,14 +38,14 @@ namespace VfpProj
         public static string Dll { get; set; }
         public static Startup Instance { get; protected set; }
         public static Startup Load() { return Instance; }
-        public FoxApplication App { get; set; }
+        //public FoxApplication App { get; set; }
 
         protected CsApp appCur;
 
         [STAThread]
-        public void Main(FoxApplication app = null, bool lRun = false)
+        public void Main() // FoxApplication app = null, bool lRun = false)
         {
-            this.App = app;
+            //this.App = app;
             Dll = "/Folder";
 
             appCur = Application.Current as CsApp ?? Folder.CsApp.Instance;
@@ -64,15 +63,15 @@ namespace VfpProj
             if (mainWnd == null)
                 mainWnd = new Folder.FolderWindow();
 
-            WindowLoad(mainWnd, app, lRun);
+            WindowLoad(mainWnd); //, app, lRun);
         }
 
-        public void WindowLoad(FolderWindow mainWnd, FoxApplication app, bool lRun = false)
+        public void WindowLoad(FolderWindow mainWnd) // , FoxApplication app, bool lRun = false)
         {
             string dir = Environment.CurrentDirectory;
 
-            if (lRun)
-                appCur.Run();
+            //if (lRun)
+            //    appCur.Run();
         }
     }
 }

@@ -9,10 +9,10 @@ namespace Folder
 {
     public struct VfpFileInfo
     {
-        public VisualFoxpro.IFoxProject vfpProj;
+        //public VisualFoxpro.IFoxProject vfpProj;
         public FileInfo f;
 
-        public bool Success { get { return f != null && f.Exists && vfpProj != null; } } 
+        public bool Success { get { return f != null && f.Exists; }} // && vfpProj != null; } } 
         public string Ext {get {return f == null ? null : Path.GetExtension(f.Name).ToLower(); }}
 
         public override string ToString()
@@ -25,13 +25,13 @@ namespace Folder
     {
         public static void ReadVfpInfo(ref VfpFileInfo info, ref string fileName, Action<String> Open)
         {
-            VisualFoxpro.IFoxProject vfpProj = null;
+            //VisualFoxpro.IFoxProject vfpProj = null;
             FileInfo f = null;
 
             try
             {
                 f = new FileInfo(fileName);
-                if (!f.Exists && vfpProj == null)
+                if (!f.Exists) // && vfpProj == null)
                     return;
             }
             catch { }
@@ -40,7 +40,7 @@ namespace Folder
 
             try
             {
-                fileName = fileName ?? vfpProj.Name;
+                // fileName = fileName ?? vfpProj.Name;
 
                 Directory.SetCurrentDirectory(Path.GetDirectoryName(fileName));
                 ext = Path.GetExtension(fileName).ToUpperInvariant();

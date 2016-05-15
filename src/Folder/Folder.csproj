@@ -160,17 +160,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="VisualFoxpro">
-      <Guid>{00A19611-D8FC-4A3E-A95F-FEA211444BF7}</Guid>
-      <VersionMajor>8</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
+  
   <ItemGroup>
     <Resource Include="pjx.ico" />
   </ItemGroup>
