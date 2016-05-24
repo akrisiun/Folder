@@ -15,7 +15,7 @@ namespace Folder.FS
 {
     public static class FolderTree
     {
-        public static void BindTree(Window w, MultiSelectTreeView tree)
+        public static void BindTree(IFolderWindow w, MultiSelectTreeView tree)
         {
             // tree.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
         }
@@ -31,7 +31,7 @@ namespace Folder.FS
             // ReadOnlyCollection<object> Items
         } */
 
-        public static void LoadDir(Window w, MultiSelectTreeView tree, string dir)
+        public static void LoadDir(IFolderWindow w, MultiSelectTreeView tree, string dir)
         {
             //SHSimpleIDListFromPath
             PidlData dataPidl = ShPidlSystem.FromPath(dir);
@@ -46,7 +46,7 @@ namespace Folder.FS
             imageItem.Bind(dataPidl);
             tree.Items.Add(imageItem);
 
-            LoadSubDirData(w, imageItem, data);
+            //LoadSubDirData(w, imageItem, data);
         }
 
         public static void LoadSubDir(Window w,

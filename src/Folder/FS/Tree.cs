@@ -5,14 +5,15 @@ using Folder.FS;
 using System.IO;
 using Folder.Visual;
 using MultiSelect;
+using Forms = System.Windows.Forms;
 
 namespace Folder.FS
 {
     public static class Tree
     {
-        public static void Bind(this Folder.FolderWindow w)
+        public static void Bind(this IFolderWindow w, Forms.TextBox Child)
         {
-            w.txtPath = w.hostPath.Child as System.Windows.Forms.TextBox;
+            w.txtPath = Child; // w.hostPath.Child as System.Windows.Forms.TextBox;
             w.txtPath.Text = FileSystem.CurrentDirectory;
             NativeAutocomplete.SetFileAutoComplete(w.txtPath);
 
@@ -32,14 +33,14 @@ namespace Folder.FS
         static void treeView_PreviewSelectionChanged(object sender, PreviewSelectionChangedEventArgs e)
         {
             var tree = sender as MultiSelectTreeView;
-            var w = CsApp.MainWindow;
+            var w = CsApp.FolderWindow;
 
             var select = e.Item as IconItem;
             if (select != null && select.Path != null)
                 w.txtFind.Text = select.Path;
         }
 
-        public static void GoUp(this Folder.FolderWindow w, Button btn)
+        public static void GoUp(this IFolderWindow w, Button btn)
         {
             var dir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "..";
             var fullDir = Path.GetFullPath(dir);
@@ -49,7 +50,7 @@ namespace Folder.FS
             LoadTree(w, w.txtPath.Text);
         }
 
-        public static void LoadTree(this Folder.FolderWindow w, string dir)
+        public static void LoadTree(this IFolderWindow w, string dir)
         {
             var ext = FileSystem.SafeGetExtensionLower(dir);
             var directory = Path.GetDirectoryName(dir);

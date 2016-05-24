@@ -15,7 +15,7 @@ namespace Folder
 {
     public static class TextDrop
     {
-        public static void Bind(this FolderWindow w, Forms.TextBox txtFile)
+        public static void Bind(this IFolderWindow w, Forms.TextBox txtFile)
         {
             txtFile.Tag = w;
             txtFile.PreviewKeyDown += txtFile_PreviewKeyDown;
@@ -26,7 +26,7 @@ namespace Folder
             var txt = sender as Forms.TextBox;
             if (e.KeyCode == Forms.Keys.Enter && txt != null)
             {
-                Tree.LoadTree(txt.Tag as FolderWindow, txt.Text);
+                Tree.LoadTree(txt.Tag as IFolderWindow, txt.Text);
             }
         }
 
