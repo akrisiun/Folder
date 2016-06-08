@@ -36,7 +36,7 @@ namespace Folder.FS
             var w = CsApp.FolderWindow;
 
             var select = e.Item as IconItem;
-            if (select != null && select.Path != null)
+            if (w != null && select != null && select.Path != null)
                 w.txtFind.Text = select.Path;
         }
 

@@ -62,19 +62,5 @@ namespace Folder
             //if (FoxCmd.Attach())
             //    FoxCmd.AssignForm(window);
         }
-
-        //public EditWindow ShowEditWindow(string file)
-        //{
-        //    var winEdit = new EditWindow();
-        //    winEdit.ShowInTaskbar = true;
-        //    if (file.Length > 0)
-        //    {
-        //        winEdit.txtPath.Text = file;
-        //        winEdit.OpenFile();
-        //    }
-
-        //    winEdit.Show();
-        //    return winEdit;
-        //}
     }
 }

@@ -119,6 +119,8 @@ namespace Folder.Visual
                 // File/Folder drop
                 string directory = Path.GetDirectoryName(firstFile);
                 var w = CsApp.FolderWindow as IFolderWindow;
+                if (w == null)
+                    return;
 
                 Directory.SetCurrentDirectory(directory);
                 w.txtPath.Text = directory;
