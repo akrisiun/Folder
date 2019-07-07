@@ -37,18 +37,20 @@ namespace Folder
             Uri iconUri = new Uri("pack://application:,,,/pjx.ico", UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
 
-            //if (Startup.Dll == null)
-            //    Startup.Dll = "Folder";
-            var Dll = "FolderLib";
+            if (Startup.Dll == null)
+                Startup.Dll = "Folder";
+            else 
+                Startup.Dll = "FolderLib";
 
             FileName = string.Empty;
             if (!_contentLoaded)
             {
                 _contentLoaded = true;
-                System.Uri resourceLocater = new System.Uri(Dll + ";component/visual/folderwindow.xaml", System.UriKind.Relative);
+                System.Uri resourceLocater = new System.Uri(Startup.Dll + ";component/visual/folderwindow.xaml", System.UriKind.Relative);
                 System.Windows.Application.LoadComponent(this, resourceLocater);
             }
 
+            // TODO: txtPath = this.txtFind
             treeObj = this.tree;
             PostLoad();
         }
@@ -71,6 +73,8 @@ namespace Folder
 
             var folder = this as IFolderWindow;
             //Tree.Bind(folder, hostPath.Child);
+            if (folder.txtPath == null)
+                return;
 
             TextDrop.Bind(folder, folder.txtPath);
             Tree.LoadTree(folder, folder.txtPath.Text);

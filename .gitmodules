@@ -1,0 +1,6 @@
+[submodule "src/MultiSelectTreeView"]
+	path = src/MultiSelectTreeView
+	url = https://github.com/akrisiun/MultiSelectTreeView.git
+[submodule "src/SharpShell"]
+	path = src/SharpShell
+	url = https://github.com/akrisiun/SharpShell.git

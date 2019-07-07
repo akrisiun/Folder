@@ -1,14 +1,15 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Shell;
-using System.Windows.Forms.Integration;
 using System.Threading;
-using System.Windows.Media.Imaging;
 
 namespace Folder
 {
+    public class Startup
+    {
+        public static string Dll { get; set; }
+    }
+
     /// <summary>
     /// Interaction logic for CsApp.xaml
     /// </summary>

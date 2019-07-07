@@ -33,7 +33,7 @@ namespace Folder.FS
         static void treeView_PreviewSelectionChanged(object sender, PreviewSelectionChangedEventArgs e)
         {
             var tree = sender as MultiSelectTreeView;
-            var w = CsApp.FolderWindow;
+            var w = sender as FolderWindow;
 
             var select = e.Item as IconItem;
             if (w != null && select != null && select.Path != null)

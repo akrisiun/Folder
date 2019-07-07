@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--$(MSBuildToolsVersion)-->
   <Import Project="$(MSBuildExtensionsPath)\14.0\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\14.0\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Folder</RootNamespace>
     <AssemblyName>Folder</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -93,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bind\WindowsEvents.cs" />
     <Compile Include="FS\DirectoryEnum.cs" />
     <Compile Include="FS\FileSystem.cs" />
     <Compile Include="FS\FolderTree.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="FS\Win32\Win32FileSystemEnumerableIterator.cs" />
     <Compile Include="FS\Win32\Win32FindFile.cs" />
     <Compile Include="FS\Win32\Win32Marshal.cs" />
+    <Compile Include="IFolderWindow.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Visual\FolderWindow.xaml.cs">
       <DependentUpon>FolderWindow.xaml</DependentUpon>
@@ -160,24 +163,21 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  
   <ItemGroup>
     <Resource Include="pjx.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultiSelectTreeView\MultiSelectTreeView\MultiSelectTreeView.csproj">
       <Project>{2854814f-ea3c-41d4-aa94-460c4694f430}</Project>
       <Name>MultiSelectTreeView</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SharpShell\SharpShellLib.csproj">
-      <Project>{03e4788d-4c48-4143-8f62-a1dcc1d895dd}</Project>
+    <ProjectReference Include="..\SharpShell\SharpShellLib\SharpShellLib.csproj">
+      <Project>{03E4788D-4C48-4143-8F62-A1DCC1D895DD}</Project>
       <Name>SharpShellLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
